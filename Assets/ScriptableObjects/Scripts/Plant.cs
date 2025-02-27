@@ -2,7 +2,7 @@ using System;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class Plant : MonoBehaviour
+public class Plant1 : MonoBehaviour
 {
     [SerializeField] private PlantData info;
     SetPlantInfo spi;

@@ -1,7 +1,7 @@
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "PlantData", menuName = "Plant Data", order = 51)]
-public class PlantData : ScriptableObject
+public class PlantData1 : ScriptableObject
 {
     public enum THREAT
     {
