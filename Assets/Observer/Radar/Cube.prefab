@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &9210037663189825973
+--- !u!1 &5236666891083740807
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,49 +8,49 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 4374538939260661275}
-  - component: {fileID: 1159439622365955031}
-  - component: {fileID: 1936304867145205874}
-  - component: {fileID: 3347069535085984864}
-  - component: {fileID: 6264576134937977657}
-  - component: {fileID: 593056223933493736}
+  - component: {fileID: 2360522794904524241}
+  - component: {fileID: 1873103151960909970}
+  - component: {fileID: 3651337279440911857}
+  - component: {fileID: 1544715062688287725}
+  - component: {fileID: 2160591707234682894}
+  - component: {fileID: 6318688182379082837}
   m_Layer: 0
-  m_Name: EggPrefab
+  m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &4374538939260661275
+--- !u!4 &2360522794904524241
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9210037663189825973}
+  m_GameObject: {fileID: 5236666891083740807}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 614.12695, y: 2.704497, z: 638.929}
-  m_LocalScale: {x: 0.28081575, y: 0.5967076, z: 0.42753196}
+  m_LocalScale: {x: 0.54701, y: 0.53985, z: 0.66254}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!33 &1159439622365955031
+--- !u!33 &1873103151960909970
 MeshFilter:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9210037663189825973}
-  m_Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
---- !u!23 &1936304867145205874
+  m_GameObject: {fileID: 5236666891083740807}
+  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!23 &3651337279440911857
 MeshRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9210037663189825973}
+  m_GameObject: {fileID: 5236666891083740807}
   m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
@@ -89,13 +89,13 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!135 &3347069535085984864
-SphereCollider:
+--- !u!65 &1544715062688287725
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9210037663189825973}
+  m_GameObject: {fileID: 5236666891083740807}
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
@@ -108,15 +108,15 @@ SphereCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 0.5
+  m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!54 &6264576134937977657
+--- !u!54 &2160591707234682894
 Rigidbody:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9210037663189825973}
+  m_GameObject: {fileID: 5236666891083740807}
   serializedVersion: 4
   m_Mass: 1
   m_Drag: 0
@@ -137,13 +137,13 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &593056223933493736
+--- !u!114 &6318688182379082837
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9210037663189825973}
+  m_GameObject: {fileID: 5236666891083740807}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: bd58d30fdbd466c4ba878c49f4ed4b82, type: 3}
@@ -151,4 +151,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   dropped: {fileID: 11400000, guid: ee5df5ab3c1d3164f9b0ee501cf2fe83, type: 2}
   pickedUp: {fileID: 11400000, guid: f4e8d446f09cb89408e2aed38c86b766, type: 2}
-  icon: {fileID: 3968632135581441540, guid: 0bef72e83a7232c41829f7d33522b8f3, type: 3}
+  icon: {fileID: 3787747669907943777, guid: c2ada6a8d7b5b7f498e20d3cda8d265b, type: 3}
