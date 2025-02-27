@@ -1,7 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
-using UnityEngine.UI;
 using System.Collections.Generic;
+using System.Drawing;
+using Image = UnityEngine.UI.Image;
 
 public class RadarObject
 {
@@ -12,7 +13,8 @@ public class RadarObject
 public class Radar : MonoBehaviour
 {
     public Transform playerPos;
-
+    public Image eggIcon;
+    
     float mapScale = 2.0f;
 
     public static List<RadarObject> radObjects = new List<RadarObject>();
@@ -64,4 +66,9 @@ public class Radar : MonoBehaviour
         DrawRadarDots();
     }
 
+    public void ItemDroppped(GameObject go)
+    {
+        Debug.Log("Item dropped");
+        RegisterRadarObject(go, eggIcon); 
+    }
 }
