@@ -5,7 +5,7 @@ using UnityEngine;
 public class ProcCube: Object
 {
     public enum Cubeside { BOTTOM, TOP, LEFT, RIGHT, FRONT, BACK };
-    
+
     static GameObject cube;
 
     public static GameObject Clone(Vector3 pos)
@@ -24,11 +24,12 @@ public class ProcCube: Object
         cubeClone.AddComponent<Rigidbody>();
         cubeClone.AddComponent<BoxCollider>();
         cubeClone.name = "Cube(Clone)";
-        cubeClone.SetActive(true);
+        cubeClone.gameObject.SetActive(true);
         cubeClone.transform.position = pos;
         return cubeClone;
     }
-    
+
+
     public static void CreateQuad(Cubeside side, GameObject parent)
     {
         Mesh mesh = new Mesh();
@@ -153,8 +154,8 @@ public class ProcCube: Object
 
         cube.GetComponent<MeshFilter>().mesh = new Mesh();
         cube.GetComponent<MeshFilter>().mesh.CombineMeshes(combine);
-        cube.GetComponent<MeshFilter>().mesh.name = "CreatedCube_" + 
-                                                    Time.realtimeSinceStartup.ToString();
+        cube.GetComponent<MeshFilter>().mesh.name = "CreatedCube_" +
+                                                        Time.realtimeSinceStartup.ToString();
         MeshRenderer rend = cube.GetComponent<MeshRenderer>();
         rend.material = new Material(Shader.Find("Holistic/Plasma"));
         cube.AddComponent<Rigidbody>();

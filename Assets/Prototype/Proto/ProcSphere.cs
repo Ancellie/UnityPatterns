@@ -1,7 +1,34 @@
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public static void CreateSphere(Vector3 pos)
+public class ProcSphere: Object
+{
+    static GameObject sphere;
+
+    public static GameObject Clone(Vector3 pos)
+    {
+        if (sphere == null)
+        {
+            CreateSphere(Vector3.zero);
+            sphere.SetActive(false);
+        }
+        GameObject sphereClone = new GameObject();
+        sphereClone.AddComponent<MeshFilter>();
+        sphereClone.AddComponent<MeshRenderer>();
+        sphereClone.GetComponent<MeshFilter>().mesh = sphere.GetComponent<MeshFilter>().mesh;
+        MeshRenderer rend = sphereClone.GetComponent<MeshRenderer>();
+        rend.material = sphere.GetComponent<MeshRenderer>().material;
+        sphereClone.AddComponent<Rigidbody>();
+        sphereClone.AddComponent<BoxCollider>();
+        sphereClone.name = "Sphere(Clone)";
+        sphereClone.gameObject.SetActive(true);
+        sphereClone.transform.position = pos;
+        return sphereClone;
+    }
+
+
+    public static void CreateSphere(Vector3 pos)
     {
         sphere = new GameObject();
         sphere.AddComponent<MeshFilter>();
@@ -139,3 +166,4 @@ public static void CreateSphere(Vector3 pos)
         sphere.gameObject.SetActive(true);
         sphere.transform.position = pos;
     }
+}

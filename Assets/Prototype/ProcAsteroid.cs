@@ -1,20 +1,45 @@
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public static void CreateSphere(Vector3 pos)
-    {
-        sphere = new GameObject();
-        sphere.AddComponent<MeshFilter>();
-        sphere.AddComponent<MeshRenderer>();
+public class ProcAsteroid: Object
+{
+    static GameObject asteroid;
 
-        //Construct Sphere Mesh =======================
+    public static GameObject Clone(Vector3 pos)
+    {
+        if (asteroid == null)
+        {
+            CreateAsteroid(pos);
+            asteroid.SetActive(false);
+        }
+        GameObject asteroidClone = new GameObject();
+        asteroidClone.AddComponent<MeshFilter>();
+        asteroidClone.AddComponent<MeshRenderer>();
+        asteroidClone.GetComponent<MeshFilter>().sharedMesh = asteroid.GetComponent<MeshFilter>().sharedMesh;
+        MeshRenderer rend = asteroidClone.GetComponent<MeshRenderer>();
+        rend.sharedMaterial = asteroid.GetComponent<MeshRenderer>().sharedMaterial;
+        asteroidClone.name = "asteroid(Clone)";
+        asteroidClone.gameObject.SetActive(true);
+        asteroidClone.transform.position = pos;
+        return asteroidClone;
+    }
+
+
+    public static void CreateAsteroid(Vector3 pos)
+    {
+        asteroid = new GameObject();
+        asteroid.AddComponent<MeshFilter>();
+        asteroid.AddComponent<MeshRenderer>();
+
+        //Construct asteroid Mesh =======================
         Mesh mesh = new Mesh();
-        mesh.name = "Sphere_" + Time.realtimeSinceStartup.ToString();
+        mesh.name = "asteroid_" + Time.realtimeSinceStartup.ToString();
         mesh.Clear();
 
         float radius = 1f; 
-        int LONGITUDE = 20;
-        int LATITUDE = 20;
+        int LONGITUDE = 50;
+        int LATITUDE = 50;
 
         Vector3[] vertices = new Vector3[(LONGITUDE + 1) * LATITUDE + 2 * LONGITUDE];
         float PI2 = Mathf.PI * 2f;
@@ -121,6 +146,21 @@ public static void CreateSphere(Vector3 pos)
             triangles[i++] = vertices.Length - LONGITUDE - (lon + 1);
         }
 
+        Vector3 offsets = new Vector3(Random.Range(100, 200),
+                                        Random.Range(100, 200),
+                                        Random.Range(100, 200));
+        for (int v = 0; v < vertices.Length; v++)
+        {
+            vertices[v] += normals[v] * 
+                    Mathf.PerlinNoise((vertices[v].x + offsets.x)/0.4f, 
+                                        (vertices[v].y + offsets.y)/0.5f)
+                    * Mathf.PerlinNoise((vertices[v].x + offsets.x) / 0.4f,
+                                        (vertices[v].z + offsets.z) / 0.5f)
+                     * Mathf.PerlinNoise((vertices[v].y + offsets.y) / 0.6f,
+                                        (vertices[v].z + offsets.z) / 0.5f);
+            vertices[v].x *= 2;
+        }
+
         mesh.vertices = vertices;
         mesh.normals = normals;
         mesh.uv = uvs;
@@ -129,13 +169,10 @@ public static void CreateSphere(Vector3 pos)
         mesh.RecalculateBounds();
         //=========================================================
 
-        sphere.GetComponent<MeshFilter>().mesh = mesh;
+        asteroid.GetComponent<MeshFilter>().mesh = mesh;
 
-        MeshRenderer rend = sphere.GetComponent<MeshRenderer>();
-        rend.material = new Material(Shader.Find("Holistic/Plasma"));
-        sphere.AddComponent<Rigidbody>();
-        sphere.AddComponent<SphereCollider>();
-        sphere.name = "Sphere";
-        sphere.gameObject.SetActive(true);
-        sphere.transform.position = pos;
+        asteroid.name = "asteroid";
+        asteroid.gameObject.SetActive(true);
+        asteroid.transform.position = pos;
     }
+}
