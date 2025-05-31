@@ -12,7 +12,8 @@ public class DropGarbage : MonoBehaviour {
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             if (Physics.Raycast(ray.origin, ray.direction, out hitInfo))
             {
-                Instantiate(garbage,hitInfo.point,Quaternion.identity);
+                GameObject go = Instantiate(garbage,hitInfo.point,Quaternion.identity);
+                GameEnvironment.Singleton.AddObstacles(go);
             }
         }
     }
