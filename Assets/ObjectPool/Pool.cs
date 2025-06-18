@@ -1,6 +1,7 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 [System.Serializable]
 public class PoolItem{
@@ -10,57 +11,66 @@ public class PoolItem{
 }
 
 public class Pool : MonoBehaviour {
-
     public static Pool singleton;
     public List<PoolItem> items;
-    public List<GameObject> pooledItems;
-
+    
+    private Dictionary<string, Queue<GameObject>> inactiveObjectsByTag;
+    private Dictionary<string, PoolItem> itemsByTag;
+    
     void Awake()
     {
         singleton = this;
     }
-
+    
     public GameObject Get(string tag)
     {
-        for (int i = 0; i < pooledItems.Count; i++)
+        // Шукаємо неактивний об'єкт у черзі
+        if (inactiveObjectsByTag.ContainsKey(tag) && inactiveObjectsByTag[tag].Count > 0)
         {
-            if(!pooledItems[i].activeInHierarchy && pooledItems[i].tag == tag)
-            {
-                return pooledItems[i];
-            }
+            return inactiveObjectsByTag[tag].Dequeue();
         }
-
-        foreach(PoolItem item in items)
+        
+        // Якщо немає доступних об'єктів, створюємо новий (якщо можливо)
+        if (itemsByTag.ContainsKey(tag) && itemsByTag[tag].expandable)
         {
-            if(item.prefab.tag == tag && item.expandable)
-            {
-                GameObject obj = Instantiate(item.prefab);
-                obj.SetActive(false);
-                pooledItems.Add(obj);
-                return obj;
-            }
+            GameObject obj = Instantiate(itemsByTag[tag].prefab);
+            obj.SetActive(false);
+            return obj;
         }
-
+        
         return null;
     }
-
-    // Use this for initialization
-	void Start () {
-        pooledItems = new List<GameObject>();
-        foreach(PoolItem item in items)
+    
+    public void ReturnToPool(GameObject obj)
+    {
+        string tag = obj.tag;
+        obj.SetActive(false);
+        
+        if (!inactiveObjectsByTag.ContainsKey(tag))
         {
-            for (int i = 0; i < item.amount; i++)
-            {
-                GameObject obj = Instantiate(item.prefab);
-                obj.SetActive(false);
-                pooledItems.Add(obj);
-            }
+            inactiveObjectsByTag[tag] = new Queue<GameObject>();
         }
-	}
-
-
-        // Update is called once per frame
-        void Update () {
-		
-	}
+        
+        inactiveObjectsByTag[tag].Enqueue(obj);
+    }
+    
+    void Start()
+    {
+        inactiveObjectsByTag = new Dictionary<string, Queue<GameObject>>();
+        itemsByTag = new Dictionary<string, PoolItem>();
+        
+        items.ForEach(item => itemsByTag[item.prefab.tag] = item);
+        
+        items.ForEach(item => {
+            var objectsForTag = Enumerable.Range(0, item.amount)
+                .Select(_ => {
+                    GameObject obj = Instantiate(item.prefab);
+                    obj.SetActive(false);
+                    return obj;
+                })
+                .ToArray();
+            
+            inactiveObjectsByTag[item.prefab.tag] = new Queue<GameObject>(objectsForTag);
+        });
+    }
 }
